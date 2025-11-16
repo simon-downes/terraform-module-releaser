@@ -260,6 +260,8 @@ export async function generateTerraformDocs({ name, directory }: TerraformModule
 
   args.push(directory);
 
+  info(`Executing: ${terraformDocsPath} ${args.join(' ')}`);
+
   const { stdout, stderr } = await execFilePromisified(terraformDocsPath, args, { encoding: 'utf-8' });
 
   if (stderr) {
