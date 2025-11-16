@@ -195,6 +195,7 @@ configuring the following optional input parameters as needed.
 | `disable-wiki`                   | Whether to disable wiki generation for Terraform modules                                                                                                                                                                                                                                                                                                                                                                                                                       | `false`                                                                                               |
 | `wiki-sidebar-changelog-max`     | An integer that specifies how many changelog entries are displayed in the sidebar per module                                                                                                                                                                                                                                                                                                                                                                                   | `5`                                                                                                   |
 | `wiki-usage-template`            | A raw, multi-line string to override the default 'Usage' section in the generated wiki. Allows using variables like {{module_name}}, {{latest_tag}}, {{latest_tag_version_number}} and more.<br><sub>[Read more here](#configuring-the-wiki-usage-template)</sub>                                                                                                                                                                                                              | [See action.yml](https://github.com/techpivot/terraform-module-releaser/blob/main/action.yml#L54-L65) |
+| `wiki-show-sections`             | Comma-separated list of terraform-docs sections to show in generated wiki documentation. When specified, only these sections will be included. Valid sections: `header`, `footer`, `inputs`, `modules`, `outputs`, `providers`, `requirements`, `resources`.                                                                                                                                                                                                                   | `` (empty string)                                                                                     |
 | `disable-branding`               | Controls whether a small branding link to the action's repository is added to PR comments. Recommended to leave enabled to support OSS.                                                                                                                                                                                                                                                                                                                                        | `false`                                                                                               |
 | `module-path-ignore`             | Comma-separated list of module paths to completely ignore. Modules matching any pattern here are excluded from all versioning, releases, and documentation.<br><sub>[Read more here](#understanding-the-filtering-options)</sub>                                                                                                                                                                                                                                               | `` (empty string)                                                                                     |
 | `module-change-exclude-patterns` | Comma-separated list of file patterns (relative to each module) to exclude from triggering version changes. Lets you release a module but control which files inside it do not force a version bump.<br><sub>[Read more here](#understanding-the-filtering-options)</sub>                                                                                                                                                                                                      | `.gitignore,*.md,*.tftest.hcl,tests/**`                                                               |
@@ -278,6 +279,35 @@ All pattern matching is implemented using [minimatch](https://github.com/isaacs/
 similar to those used in `.gitignore` files. For more details on the pattern matching implementation, see our
 [source code](https://github.com/techpivot/terraform-module-releaser/blob/main/src/utils/file.ts) or visit the
 [minimatch documentation](https://github.com/isaacs/minimatch).
+
+### Customizing Wiki Sections
+
+You can control which sections appear in your generated wiki documentation using the `wiki-show-sections` input parameter. This accepts a comma-separated list of terraform-docs section names to include in the output. When specified, only these sections will be shown, providing a cleaner and more focused documentation experience.
+
+**Valid section names:**
+- `header` - Module header/description
+- `footer` - Module footer content
+- `inputs` - Input variables table
+- `modules` - Submodules table
+- `outputs` - Output values table
+- `providers` - Provider requirements
+- `requirements` - Terraform version requirements
+- `resources` - Resources table
+
+**Example usage:**
+
+```yaml
+- name: Terraform Module Releaser
+  uses: techpivot/terraform-module-releaser@v1
+  with:
+    wiki-show-sections: providers,inputs,outputs
+```
+
+This will show only the providers, inputs, and outputs sections in all generated wiki pages, hiding all other sections for a streamlined documentation view.
+
+**Why use `--show` instead of `--hide`?**
+
+The `--show` approach is more reliable than hiding sections, as it doesn't leave empty section headers in the output. This provides cleaner, more professional-looking documentation.
 
 ### Configuring the Wiki Usage Template
 

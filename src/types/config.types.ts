@@ -67,6 +67,14 @@ export interface Config {
   wikiUsageTemplate: string;
 
   /**
+   * List of terraform-docs sections to show in generated wiki documentation.
+   * When specified, only these sections will be included in the output.
+   * Valid sections include: header, footer, inputs, modules, outputs, providers, requirements, resources.
+   * When empty, all sections are shown by default.
+   */
+  wikiShowSections: string[];
+
+  /**
    * Flag to control whether the small branding link should be disabled or not in the
    * pull request (PR) comments. When branding is enabled, a link to the action's
    * repository is added at the bottom of comments. Setting this flag to `true`

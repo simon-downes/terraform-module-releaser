@@ -16,6 +16,7 @@ describe('utils/metadata', () => {
         'disable-wiki',
         'wiki-sidebar-changelog-max',
         'wiki-usage-template',
+        'wiki-show-sections',
         'disable-branding',
         'module-path-ignore',
         'module-change-exclude-patterns',

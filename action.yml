@@ -64,6 +64,14 @@ inputs:
         # See inputs below for additional required parameters
       }
       ```
+  wiki-show-sections:
+    description: >
+      Comma-separated list of terraform-docs sections to show in generated wiki documentation.
+      When specified, only these sections will be included. When empty, all sections are shown.
+      Valid sections: header, footer, inputs, modules, outputs, providers, requirements, resources.
+      Example: "providers,inputs,outputs" to show only these three sections.
+    required: false
+    default: ""
   disable-branding:
     description: >
       Flag to control whether the small branding link should be disabled or not in the
