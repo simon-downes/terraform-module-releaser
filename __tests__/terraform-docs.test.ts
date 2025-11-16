@@ -361,7 +361,17 @@ describe('terraform-docs', async () => {
       expect(result).toBe('# Test Module\nThis is test documentation.');
       expect(mockExecFilePromisified).toHaveBeenCalledWith(
         '/usr/local/bin/terraform-docs2',
-        ['markdown', 'table', '--sort-by', 'required', mockModule.directory],
+        [
+          'markdown',
+          'table',
+          '--sort-by',
+          'required',
+          '--output-mode',
+          'inject',
+          '--output-file',
+          '""',
+          mockModule.directory,
+        ],
         { encoding: 'utf-8' },
       );
     });

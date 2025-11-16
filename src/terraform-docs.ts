@@ -253,7 +253,7 @@ export async function generateTerraformDocs({ name, directory }: TerraformModule
 
   const { stdout, stderr } = await execFilePromisified(
     terraformDocsPath,
-    ['markdown', 'table', '--sort-by', 'required', directory],
+    ['markdown', 'table', '--sort-by', 'required', '--output-mode', 'inject', '--output-file', '""', directory],
     { encoding: 'utf-8' },
   );
 

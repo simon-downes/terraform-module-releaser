@@ -31,6 +31,14 @@ inputs:
       See: https://github.com/terraform-docs/terraform-docs/releases
     required: true
     default: v0.20.0
+  use-terraform-docs-config:
+    description: >
+      Whether to preserve and use a .terraform-docs.yml configuration file from the repository root.
+      When enabled, users can customize terraform-docs behavior (such as hiding sections) via a config file.
+      Note: CLI arguments for formatter, sort-by, output-mode, and output-file are explicitly set and will
+      override any conflicting settings in the config file.
+    required: true
+    default: "false"
   delete-legacy-tags:
     description: >
       Specifies a boolean that determines whether tags from Terraform modules that have been deleted

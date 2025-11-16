@@ -12,6 +12,7 @@ describe('utils/metadata', () => {
         'patch-keywords',
         'default-first-tag',
         'terraform-docs-version',
+        'use-terraform-docs-config',
         'delete-legacy-tags',
         'disable-wiki',
         'wiki-sidebar-changelog-max',

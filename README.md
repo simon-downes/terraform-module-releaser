@@ -191,6 +191,7 @@ configuring the following optional input parameters as needed.
 | `patch-keywords`                 | Keywords in commit messages that indicate a patch release                                                                                                                                                                                                                                                                                                                                                                                                                      | `fix,chore,docs`                                                                                      |
 | `default-first-tag`              | Specifies the default tag version                                                                                                                                                                                                                                                                                                                                                                                                                                              | `v1.0.0`                                                                                              |
 | `terraform-docs-version`         | Specifies the terraform-docs version used to generate documentation for the wiki                                                                                                                                                                                                                                                                                                                                                                                               | `v0.19.0`                                                                                             |
+| `use-terraform-docs-config`      | Whether to preserve and use a `.terraform-docs.yml` configuration file from the repository root. When enabled, users can customize terraform-docs behavior (such as hiding sections). CLI arguments for formatter, sort-by, output-mode, and output-file are explicitly set and will override conflicting config settings.                                                                                                                                                     | `false`                                                                                               |
 | `delete-legacy-tags`             | Specifies a boolean that determines whether tags and releases from Terraform modules that have been deleted should be automatically removed                                                                                                                                                                                                                                                                                                                                    | `true`                                                                                                |
 | `disable-wiki`                   | Whether to disable wiki generation for Terraform modules                                                                                                                                                                                                                                                                                                                                                                                                                       | `false`                                                                                               |
 | `wiki-sidebar-changelog-max`     | An integer that specifies how many changelog entries are displayed in the sidebar per module                                                                                                                                                                                                                                                                                                                                                                                   | `5`                                                                                                   |
@@ -278,6 +279,34 @@ All pattern matching is implemented using [minimatch](https://github.com/isaacs/
 similar to those used in `.gitignore` files. For more details on the pattern matching implementation, see our
 [source code](https://github.com/techpivot/terraform-module-releaser/blob/main/src/utils/file.ts) or visit the
 [minimatch documentation](https://github.com/isaacs/minimatch).
+
+### Customizing Terraform-Docs Configuration
+
+By default, the action removes any `.terraform-docs.yml` configuration file to ensure consistent documentation
+generation. However, you can preserve and use your own terraform-docs configuration by setting
+`use-terraform-docs-config: true`.
+
+When enabled, place a `.terraform-docs.yml` file at your repository root to customize terraform-docs behavior. This is
+particularly useful for controlling which sections appear in your generated wiki documentation.
+
+**Example `.terraform-docs.yml`:**
+
+```yaml
+sections:
+  hide:
+    - providers
+    - requirements
+```
+
+**Important notes:**
+
+- The config file must be placed at the repository root (not in individual module directories)
+- CLI arguments for `formatter` (markdown table), `sort-by` (required), `output-mode` (inject), and `output-file` ("")
+  are explicitly set by the action and will override any conflicting settings in your config file
+- This ensures wiki generation works correctly while allowing you to customize other aspects like section visibility
+
+For more information on terraform-docs configuration options, see the
+[terraform-docs documentation](https://terraform-docs.io/user-guide/configuration/).
 
 ### Configuring the Wiki Usage Template
 

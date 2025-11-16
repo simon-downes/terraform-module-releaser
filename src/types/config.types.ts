@@ -39,6 +39,14 @@ export interface Config {
   terraformDocsVersion: string;
 
   /**
+   * Whether to preserve and use a .terraform-docs.yml configuration file from the repository root.
+   * When enabled, users can customize terraform-docs behavior (such as hiding sections) via a config file.
+   * CLI arguments for formatter, sort-by, output-mode, and output-file are explicitly set and will
+   * override any conflicting settings in the config file.
+   */
+  useTerraformDocsConfig: boolean;
+
+  /**
    * Whether to delete legacy tags (tags that do not follow the semantic versioning format or from
    * modules that have been since removed) from the repository.
    */

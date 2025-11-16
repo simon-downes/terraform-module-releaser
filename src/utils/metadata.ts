@@ -46,6 +46,7 @@ export const ACTION_INPUTS: Record<string, ActionInputMetadata> = {
   'patch-keywords': requiredArray('patchKeywords'),
   'default-first-tag': requiredString('defaultFirstTag'),
   'terraform-docs-version': requiredString('terraformDocsVersion'),
+  'use-terraform-docs-config': requiredBoolean('useTerraformDocsConfig'),
   'delete-legacy-tags': requiredBoolean('deleteLegacyTags'),
   'disable-wiki': requiredBoolean('disableWiki'),
   'wiki-sidebar-changelog-max': requiredNumber('wikiSidebarChangelogMax'),

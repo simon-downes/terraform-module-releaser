@@ -75,7 +75,9 @@ async function handlePullRequestMergedEvent(
     info('Wiki generation is disabled.');
   } else {
     installTerraformDocs(config.terraformDocsVersion);
-    ensureTerraformDocsConfigDoesNotExist();
+    if (!config.useTerraformDocsConfig) {
+      ensureTerraformDocsConfigDoesNotExist();
+    }
     checkoutWiki();
     await generateWikiFiles(terraformModules);
     await commitAndPushWikiChanges();
