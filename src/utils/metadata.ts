@@ -50,6 +50,7 @@ export const ACTION_INPUTS: Record<string, ActionInputMetadata> = {
   'disable-wiki': requiredBoolean('disableWiki'),
   'wiki-sidebar-changelog-max': requiredNumber('wikiSidebarChangelogMax'),
   'wiki-usage-template': requiredString('wikiUsageTemplate'),
+  'hide-wiki-sections': optionalArray('hideWikiSections'),
   'disable-branding': requiredBoolean('disableBranding'),
   'module-path-ignore': optionalArray('modulePathIgnore'),
   'module-change-exclude-patterns': optionalArray('moduleChangeExcludePatterns'),

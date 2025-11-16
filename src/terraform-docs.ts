@@ -3,6 +3,7 @@ import { existsSync, mkdtempSync, rmSync, unlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
+import { config } from '@/config';
 import { context } from '@/context';
 import type { TerraformModule } from '@/terraform-module';
 import { endGroup, info, startGroup } from '@actions/core';
@@ -251,11 +252,15 @@ export async function generateTerraformDocs({ name, directory }: TerraformModule
 
   const terraformDocsPath = which.sync('terraform-docs');
 
-  const { stdout, stderr } = await execFilePromisified(
-    terraformDocsPath,
-    ['markdown', 'table', '--sort-by', 'required', directory],
-    { encoding: 'utf-8' },
-  );
+  const args = ['markdown', 'table', '--sort-by', 'required'];
+
+  if (config.hideWikiSections.length > 0) {
+    args.push('--hide', config.hideWikiSections.join(','));
+  }
+
+  args.push(directory);
+
+  const { stdout, stderr } = await execFilePromisified(terraformDocsPath, args, { encoding: 'utf-8' });
 
   if (stderr) {
     throw new Error(`Terraform-docs generation failed for module: ${name}\n${stderr}`);

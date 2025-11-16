@@ -366,6 +366,42 @@ describe('terraform-docs', async () => {
       );
     });
 
+    it('should include --hide argument when hideWikiSections is not empty', async () => {
+      const { config } = await import('@/mocks/config');
+      config.set({ hideWikiSections: ['providers', 'requirements'] });
+
+      mockWhichSync.mockImplementation(() => '/usr/local/bin/terraform-docs2');
+
+      const result = await generateTerraformDocs(mockModule);
+
+      expect(result).toBe('# Test Module\nThis is test documentation.');
+      expect(mockExecFilePromisified).toHaveBeenCalledWith(
+        '/usr/local/bin/terraform-docs2',
+        ['markdown', 'table', '--sort-by', 'required', '--hide', 'providers,requirements', mockModule.directory],
+        { encoding: 'utf-8' },
+      );
+
+      config.resetDefaults();
+    });
+
+    it('should not include --hide argument when hideWikiSections is empty', async () => {
+      const { config } = await import('@/mocks/config');
+      config.set({ hideWikiSections: [] });
+
+      mockWhichSync.mockImplementation(() => '/usr/local/bin/terraform-docs2');
+
+      const result = await generateTerraformDocs(mockModule);
+
+      expect(result).toBe('# Test Module\nThis is test documentation.');
+      expect(mockExecFilePromisified).toHaveBeenCalledWith(
+        '/usr/local/bin/terraform-docs2',
+        ['markdown', 'table', '--sort-by', 'required', mockModule.directory],
+        { encoding: 'utf-8' },
+      );
+
+      config.resetDefaults();
+    });
+
     it('should throw error when terraform-docs command returns stderr', async () => {
       mockExecFilePromisified.mockReturnValue(
         Promise.resolve({
